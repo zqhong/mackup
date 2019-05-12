@@ -54,11 +54,9 @@ class ApplicationProfile(object):
                   are you sure ?
                   if sure
                     rm mackup/file
-                    mv home/file mackup/file
-                    link mackup/file home/file
+                    cp home/file mackup/file
                 else
-                  mv home/file mackup/file
-                  link mackup/file home/file
+                  cp home/file mackup/file
         """
         # For each file used by the application
         for filename in self.files:
@@ -105,17 +103,9 @@ class ApplicationProfile(object):
                         utils.delete(mackup_filepath)
                         # Copy the file
                         utils.copy(home_filepath, mackup_filepath)
-                        # Delete the file in the home
-                        utils.delete(home_filepath)
-                        # Link the backuped file to its original place
-                        utils.link(mackup_filepath, home_filepath)
                 else:
                     # Copy the file
                     utils.copy(home_filepath, mackup_filepath)
-                    # Delete the file in the home
-                    utils.delete(home_filepath)
-                    # Link the backuped file to its original place
-                    utils.link(mackup_filepath, home_filepath)
             elif self.verbose:
                 if os.path.exists(home_filepath):
                     print("Doing nothing\n  {}\n  "
@@ -139,9 +129,9 @@ class ApplicationProfile(object):
                 are you sure ?
                 if sure
                   rm home/file
-                  link mackup/file home/file
+                  copy mackup/file home/file
               else
-                link mackup/file home/file
+                copy mackup/file home/file
         """
         # For each file used by the application
         for filename in self.files:
@@ -186,9 +176,9 @@ class ApplicationProfile(object):
                                      " your backup ?"
                                      .format(file_type, filename)):
                         utils.delete(home_filepath)
-                        utils.link(mackup_filepath, home_filepath)
+                        utils.copy(mackup_filepath, home_filepath)
                 else:
-                    utils.link(mackup_filepath, home_filepath)
+                    utils.copy(mackup_filepath, home_filepath)
             elif self.verbose:
                 if os.path.exists(home_filepath):
                     print("Doing nothing\n  {}\n  already linked by\n  {}"

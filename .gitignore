@@ -10,3 +10,5 @@
 
 # Used by pyenv
 /.python-version
+
+/.idea
