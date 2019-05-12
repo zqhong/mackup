@@ -68,4 +68,4 @@ python setup.py
 
 ## 支持同步的应用
 
-参考：[mackup/applications/]（mackup/applications/）
+参考：[mackup/applications/](mackup/applications/)
