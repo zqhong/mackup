@@ -7,7 +7,6 @@ Usage:
   mackup list
   mackup [options] backup
   mackup [options] restore
-  mackup [options] uninstall
   mackup (-h | --help)
   mackup --version
 
@@ -25,7 +24,6 @@ Modes of action:
     GnuPG.)
  3. restore: link the conf files already in your synced storage on your system,
     use it on any new system you use.
- 4. uninstall: reset everything as it was before using Mackup.
 
 By default, Mackup syncs all application data (except for private keys) via
 Dropbox, but may be configured to exclude applications or use a different
@@ -119,49 +117,6 @@ def main():
                                      verbose)
             printAppHeader(app_name)
             app.restore()
-
-    elif args['uninstall']:
-        # Check the env where the command is being run
-        mckp.check_for_usable_restore_env()
-
-        if dry_run or (
-           utils.confirm("You are going to uninstall Mackup.\n"
-                         "Every configuration file, setting and dotfile"
-                         " managed by Mackup will be unlinked and moved back"
-                         " to their original place, in your home folder.\n"
-                         "Are you sure ?")):
-
-            # Uninstall the apps except Mackup, which we'll uninstall last, to
-            # keep the settings as long as possible
-            app_names = mckp.get_apps_to_backup()
-            app_names.discard(MACKUP_APP_NAME)
-
-            for app_name in sorted(app_names):
-                app = ApplicationProfile(mckp,
-                                         app_db.get_files(app_name),
-                                         dry_run,
-                                         verbose)
-                printAppHeader(app_name)
-                app.uninstall()
-
-            # Restore the Mackup config before any other config, as we might
-            # need it to know about custom settings
-            mackup_app = ApplicationProfile(mckp,
-                                            app_db.get_files(MACKUP_APP_NAME),
-                                            dry_run,
-                                            verbose)
-            mackup_app.uninstall()
-
-            # Delete the Mackup folder in Dropbox
-            # Don't delete this as there might be other Macs that aren't
-            # uninstalled yet
-            # delete(mckp.mackup_folder)
-
-            print("\n"
-                  "All your files have been put back into place. You can now"
-                  " safely uninstall Mackup.\n"
-                  "\n"
-                  "Thanks for using Mackup !")
 
     elif args['list']:
         # Display the list of supported applications

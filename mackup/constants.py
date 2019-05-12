@@ -1,6 +1,6 @@
 """Constants used in Mackup."""
 # Current version
-VERSION = '0.8.24'
+VERSION = '0.8.24-dev'
 
 # Support platforms
 PLATFORM_DARWIN = 'Darwin'
